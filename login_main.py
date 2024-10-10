@@ -39,7 +39,7 @@ def home():
     if not session.get('logged_in'):
         return redirect(url_for("login"))
     else:
-        return "Logged out Currently!"
+        return redirect(f'/auth?token={session["token"]}')
 
 @app.route("/login")
 def login():
@@ -73,7 +73,6 @@ def session_logout():
     try:
         payload = jwt.decode(session["token"], app.config['SECRET_KEY'], algorithms=["HS256"])
         user_name = payload['user']
-
         # Generate a new token with status=False to simulate logout
         new_token = jwt.encode({
             "user": user_name,
