@@ -1,13 +1,17 @@
-from lib.lib import *
+from flask import Flask, Response,jsonify,request, make_response,session, redirect, url_for
+import sqlite3
+import jwt
+from datetime import datetime,timedelta,timezone
+from functools import wraps
+import secrets
 
 # Generating a secret key
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "7611a581f22da3bae0598462f400e3bc"
+app.config['SECRET_KEY'] = secrets.token_hex(32)
 
 # Helper function to interact with the database
 def connect_data():
-    conn = sqlite3.connect("/home/saturam/Desktop/Python_Project_Folder/"
-                           "pythonProject/library_inventory/database/admin.db")
+    conn = sqlite3.connect("/home/sathya/codebase/User_Authentication-main/database/admin.db")
     return conn
 
 
